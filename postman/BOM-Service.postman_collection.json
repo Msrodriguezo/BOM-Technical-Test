@@ -1,0 +1,354 @@
+{
+  "info": {
+    "_postman_id": "bom-service-collection",
+    "name": "BOM Service API",
+    "description": "Colección completa de endpoints para probar el microservicio BOM (Bill of Materials)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Productos",
+      "description": "Operaciones relacionadas con productos",
+      "item": [
+        {
+          "name": "Crear Producto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreProducto\": \"Zapato Nike Air Max\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/productos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productos"
+              ]
+            },
+            "description": "Crea un nuevo producto en el sistema"
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Todos los Productos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/productos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productos"
+              ]
+            },
+            "description": "Obtiene la lista completa de todos los productos almacenados en el sistema"
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Producto por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/productos/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "1"
+              ]
+            },
+            "description": "Obtiene los detalles de un producto incluyendo su BOM"
+          },
+          "response": []
+        },
+        {
+          "name": "Agregar Insumo a Producto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cuero Premium\",\n  \"cantidad\": 2.5,\n  \"unidadDeMedidaId\": 6\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/productos/1/insumos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "1",
+                "insumos"
+              ]
+            },
+            "description": "Agrega un insumo a la lista de Bill of Materials de un producto"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Insumos",
+      "description": "Operaciones relacionadas con insumos/materiales",
+      "item": [
+        {
+          "name": "Obtener Todos los Insumos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/insumos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "insumos"
+              ]
+            },
+            "description": "Obtiene la lista completa de todos los insumos/materiales almacenados en el sistema con sus unidades de medida"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Producción",
+      "description": "Operaciones de cálculo de insumos para producción",
+      "item": [
+        {
+          "name": "Calcular Insumos para Producción",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productoId\": 1,\n  \"cantidad\": 100\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/production/calculate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "production",
+                "calculate"
+              ]
+            },
+            "description": "Calcula la cantidad total de insumos necesarios para producir una cantidad específica de productos"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Flujo Completo - Ejemplo",
+      "description": "Ejemplo de flujo completo desde crear producto hasta calcular insumos",
+      "item": [
+        {
+          "name": "1. Crear Producto - Zapato",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreProducto\": \"Zapato ADidas\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/productos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productos"
+              ]
+            },
+            "description": "Primer paso: Crear un nuevo producto"
+          },
+          "response": []
+        },
+        {
+          "name": "2. Agregar Insumo - Cuero",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cuero\",\n  \"cantidad\": 2,\n  \"unidadDeMedidaId\": 6\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/productos/2/insumos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "2",
+                "insumos"
+              ]
+            },
+            "description": "Agregar el primer insumo (Cuero en metros)"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Agregar Insumo - Suela",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Suela\",\n  \"cantidad\": 1,\n  \"unidadDeMedidaId\": 5\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/productos/2/insumos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "2",
+                "insumos"
+              ]
+            },
+            "description": "Agregar el segundo insumo (Suela en unidades)"
+          },
+          "response": []
+        },
+        {
+          "name": "4. Agregar Insumo - Cordones",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cordones\",\n  \"cantidad\": 1,\n  \"unidadDeMedidaId\": 5\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/productos/2/insumos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "2",
+                "insumos"
+              ]
+            },
+            "description": "Agregar el tercer insumo (Cordones en unidades)"
+          },
+          "response": []
+        },
+        {
+          "name": "5. Ver Producto Completo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/productos/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "2"
+              ]
+            },
+            "description": "Verificar que el producto tiene todos los insumos agregados"
+          },
+          "response": []
+        },
+        {
+          "name": "6. Calcular para Producción de 100 Unidades",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/produccion/calcular?productId=2&cantidad=100",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "produccion",
+                "calcular"
+              ],
+              "query": [
+                {
+                  "key": "productId",
+                  "value": "2"
+                },
+                {
+                  "key": "cantidad",
+                  "value": "100"
+                }
+              ]
+            },
+            "description": "Calcular los insumos totales necesarios para producir 100 zapatos"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ]
+}
